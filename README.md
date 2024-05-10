@@ -18,4 +18,5 @@ Samples used to test and validate this clock were aligned to the human genome (h
 ## Questions, concerns, collaborations
 Do you have your own sequencing-based methylation data that you want to build your own clock with, say in a different tissue? If so, feel free to email me at at madrid2[at]wisc.edu and we can work it out, together. I am always happy to collaborate and/or help! Also, if there's some functinoality that you think would be of great value to add, you can also let me know and I can work on implementing that, as well.
 
+See you space cowboy...
 - AM
