@@ -1,0 +1,134 @@
+---
+title: "MADRID: Methylation Age Determination via Read-Informated Data"
+subtitle: "Andy Madrid"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## General Usage
+This is a short introduction to the general functionality of the madrid package. In short, this package takes a bsseq object, filters CpGs to only those select few used to determine epigenetic age, impute any missing values, and then predicts age for each sample.
+
+
+There are a few more functions, such as guessing the sex of samples, but those are very much in the beta testing stage.
+
+
+Let's start by installing some packages that are needed to install and run the madrid package.
+
+## Installation
+```{r}
+### Install required packages
+# install.packages(c("devtools","bsseq","glmnet", "mice", "wateRmelon", "DunedinPACE"))
+
+
+### install the madrid package
+# install_github("andymadrid/madrid")
+
+
+```
+
+Now we can load the madrid package.
+
+## Setup
+```{r setup}
+# load in the madrid pacakge
+suppressPackageStartupMessages(library(madrid))
+
+
+```
+Now we can load in a toy dataset.
+
+```{r}
+# get toy example
+data(bs)
+
+
+```
+Let us take a look at this toy example.
+
+```{r}
+# summary of bsseq object
+bs
+
+# summary of phenotypic data associated with bsseq object
+pData(bs)
+
+
+```
+We see we have 10 samples. Due to size limitations, this bsseq object only has the CpGs used to predict age, along with CpGs from the sex chromosomes. However, for your purposes, there is no need to remove any CpGs from your bsseq object. In fact, that is not advised.
+
+The bsseq object also has some phenotypic data for the samples, which includes the age, sex, and (pseudo) diagnostic group for each.
+
+
+## Guess sex of samples
+
+Now we can attempt to guess the sex of the samples.
+
+```{r}
+# guess sample sex from bsseq object
+guessed_sex <- guessSex(bs)
+
+# look at the output
+guessed_sex
+
+
+```
+We see that the guessed sex matches up nicely with the actual sex of the samples.
+
+## Predict age
+
+Now lets predict the age of the samples
+```{r}
+# predict age from bsseq object
+predicted_age <- predictAge(bs)
+
+# look at the output
+predicted_age
+
+
+```
+This outputs the predicted ages for each sample. We can also see how well they correlate with the actual ages, if that information is readily available.
+
+Please note, by default the predictAge() function will estimate age using array-based clocks, as well as the sequencing-based clock. To do this, it leans heavily on two other packages, wateRmelon and DunedinPACE. At its core, for this portion of the function, it really just formats the methylation matrix accordingly and filters CpGs to only those on the arrays. In this toy example most of the ages look off due to the fact that most CpGs are missing because of size limitations. That being said, in your own data, estimates should (hopefully) be more accurate.
+```{r}
+# assess the correlation between actual and estimated age
+corMADRID <- cor(predicted_age$MADRID_Age, pData(bs)$Age)
+corMADRID
+
+```
+We see that we have a fairly nice correlation between predicted and actual age. And that's really all that there is to it. You can take these results and see if there are any signficiant differences between the estimated and actual age of samples between groups.
+
+```{r}
+# test for differences (accelerated/decelerated) in actual and estimated age
+predicted_age$difference <- predicted_age$MADRID_Age - pData(bs)$Age
+
+t.test(predicted_age$difference ~ factor(pData(bs)$Diagnosis))
+
+
+```
+Some people prefer to run the test on the residuals, rather than on the direct differences in age themselves. That would look something like this...
+
+```{r}
+# test for differences in the resduals between actual and estimated age
+predicted_age$residuals <- resid(lm(predicted_age$MADRID_Age ~ pData(bs)$Age))
+t.test(predicted_age$residuals ~ factor(pData(bs)$Diagnosis))
+
+
+```
+
+In this toy example there is no signficant difference (accelerated or decelerated) in predicted age between groups. Hopefully in your data there will be, though!
+
+
+
+
+
+
