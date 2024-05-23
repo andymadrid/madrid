@@ -11,6 +11,10 @@ At its core, all it really does is filter your bsseq object for the select few C
 
 Additional functionality has been added to the predictAge() function to now allow it to predict age from several array-based clocks, including Horvath's (original), Hannum's, Levine's (PhenoAge), Horvath's (Skin-Blood), Lin's, and DunedinPACE. Essentially, it takes a matrix of methylation values, formats them a bit, filters to only those CpGs on the arrays (27k, 450k, and EPICv1), adds CpG names from the arrays, then leans heavily on R packages wateRmelon and DunedinPACE to estimate age from all those clocks. So, even if your data isn't blood-based as the MADRID clock was developed for, you can still estiamte ages from sequencing-based data using these clocks. Pretty cool, right?
 
+## Imputation
+
+Your dataset may very well have some missing CpGs for either the sequencing-based clock and/or the array-based clocks, which is totally okay. It's to be expected, especially if sequencing depth was on the lower end. To get around this, an imputation step has been implemented in the predictAge() function which calls the mice() function to impute missing data, using a random forest method. In my testing I found that - at least for the sequencing-based clock - mice() run with random forest then averaged across imputed datasets yielded better estimates than, say, impute.knn() did, which is the method commonly used for most array-based clocks. An advanced user can feel free to edit the code as they see fit to change the imputation method. The currently employed method just happened to be the best that I found in my testing, but may not be robust enough for all datasets.
+
 ## Word of warning
 
 ### Blood samples
