@@ -5,7 +5,7 @@ Hey, thanks for stopping on by! This is baby's first R package, so bear with me 
 
 The package is pretty straightforward; all you really need to start is a bsseq object.
 
-At its core, all it really does is filter your bsseq object for the select few CpGs used to predict age from peripheral blood. There's a function to guess the sex of your samples, but that is very much in the beta testing stage of things. Feel free to test it out, just know that your results may vary. To increase its accuracy, more samples are needed to enhance its predictive power.
+At its core, all it really does is filter your bsseq object for the select few CpGs used to predict age from peripheral blood. However, it is quickly becoming a wrapper for many functionalities that were developed for microarray DNA methylation data and allowing sequencing-based data to be used with them, such as guessing the sex of samples, estimating cell-type proportions of blood samples, and identifying stochastic epigenetic mutations (SEMs).
 
 ## Vignette
 
