@@ -10,6 +10,7 @@ At its core, all it really does is filter your bsseq object for the select few C
 ## Vignette
 
 Check out the tutorial of the general functionality of the package at:
+
 http://htmlpreview.github.io/?https://raw.githubusercontent.com/andymadrid/madrid/main/vignettes/introduction.html
 
 ## Sequencing-based data to array-based clocks
