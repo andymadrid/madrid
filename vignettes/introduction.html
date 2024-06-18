@@ -406,7 +406,7 @@ includes the age, sex, and (pseudo) diagnostic group for each.</p>
 <h2>Guess sex of samples</h2>
 <p>Now we can attempt to guess the sex of the samples.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># guess sample sex from bsseq object</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>guessed_sex <span class="ot">&lt;-</span> <span class="fu">guessSex</span>(bs)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>guessed_sex <span class="ot">&lt;-</span> <span class="fu">guessSex</span>(bs, <span class="at">fastGuess =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; [madrid]: filtering to only CpGs on sex chromosomes</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [madrid]: getting medians for each sample</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; [madrid]: guessing the sex for each sample</span></span>
@@ -425,7 +425,14 @@ includes the age, sex, and (pseudo) diagnostic group for each.</p>
 <span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 9         0.9285714        0.8500000         Male</span></span>
 <span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; 10        0.8571429        1.0000000       Female</span></span></code></pre></div>
 <p>We see that the guessed sex matches up nicely with the actual sex of
-the samples.</p>
+the samples. That being said, please note that in this demonstration we
+use the fastGuess option which is not as accurate as the slow method
+that normalizes methylation levels to z-scores. The fast method was
+implemented here because this toy bsseq object has mainly only sex
+chromosome CpGs, thus normalizing using autosome methylation levels is
+not really possible here. However, your bsseq object likely has all
+tested CpGs, autosomal and sex, and, thus, the fastGuess option is not
+advised for most cases.</p>
 </div>
 <div id="predict-age" class="section level2">
 <h2>Predict age</h2>

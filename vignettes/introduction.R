@@ -37,7 +37,7 @@ pData(bs)
 
 ## -----------------------------------------------------------------------------
 # guess sample sex from bsseq object
-guessed_sex <- guessSex(bs)
+guessed_sex <- guessSex(bs, fastGuess = TRUE)
 
 # look at the output
 guessed_sex

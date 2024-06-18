@@ -75,14 +75,14 @@ Now we can attempt to guess the sex of the samples.
 
 ```{r}
 # guess sample sex from bsseq object
-guessed_sex <- guessSex(bs)
+guessed_sex <- guessSex(bs, fastGuess = TRUE)
 
 # look at the output
 guessed_sex
 
 
 ```
-We see that the guessed sex matches up nicely with the actual sex of the samples.
+We see that the guessed sex matches up nicely with the actual sex of the samples. That being said, please note that in this demonstration we use the fastGuess option which is not as accurate as the slow method that normalizes methylation levels to z-scores. The fast method was implemented here because this toy bsseq object has mainly only sex chromosome CpGs, thus normalizing using autosome methylation levels is not really possible here. However, your bsseq object likely has all tested CpGs, autosomal and sex, and, thus, the fastGuess option is not advised for most cases.
 
 ## Predict age
 
