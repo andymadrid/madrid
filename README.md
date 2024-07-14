@@ -1,7 +1,7 @@
 # madrid: Methylation Age Determination via Read-Informed Data (MADRID) epigenetic clock
 
 ## Welcome
-Hey, thanks for stopping on by! This is baby's first R package, so bear with me here.
+Hey, thanks for stopping on by! This is my first R package, so bear with me here.
 
 The package is pretty straightforward; all you really need to start is a bsseq object.
 
