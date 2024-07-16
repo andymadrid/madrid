@@ -37,7 +37,7 @@ pData(bs)
 
 ## -----------------------------------------------------------------------------
 # guess sample sex from bsseq object
-guessed_sex <- guessSex(bs, fastGuess = TRUE)
+guessed_sex <- guessSex(bs)
 
 # look at the output
 guessed_sex
@@ -76,7 +76,7 @@ t.test(predicted_age$residuals ~ factor(pData(bs)$Diagnosis))
 
 ## -----------------------------------------------------------------------------
 # estimate cell-type proportions from blood samples
-# cellProps <- estimateCellCounts(bs)
+# cellProps <- estimateCellProps(bs)
 
 # check the estimates
 # head(cellProps)

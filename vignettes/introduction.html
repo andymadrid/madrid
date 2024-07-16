@@ -406,33 +406,26 @@ includes the age, sex, and (pseudo) diagnostic group for each.</p>
 <h2>Guess sex of samples</h2>
 <p>Now we can attempt to guess the sex of the samples.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># guess sample sex from bsseq object</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>guessed_sex <span class="ot">&lt;-</span> <span class="fu">guessSex</span>(bs, <span class="at">fastGuess =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; [madrid]: filtering to only CpGs on sex chromosomes</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [madrid]: getting medians for each sample</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>guessed_sex <span class="ot">&lt;-</span> <span class="fu">guessSex</span>(bs)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; [madrid]: filtering for only CpGs on sex chromosomes</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [madrid]: getting statistics from sex chromosomes for each sample</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; [madrid]: guessing the sex for each sample</span></span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># look at the output</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>guessed_sex</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;    Median_Meth_chrX Median_Meth_chrY predictedSex</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; 1         0.8571429        1.0000000       Female</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; 2         0.8409091        1.0000000       Female</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; 3         0.8636364        1.0000000       Female</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; 4         0.8588957        1.0000000       Female</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; 5         0.9375000        0.8571429         Male</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; 6         0.8709677        1.0000000       Female</span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; 7         0.9166667        0.8750000         Male</span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; 8         0.8636364        1.0000000       Female</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 9         0.9285714        0.8500000         Male</span></span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; 10        0.8571429        1.0000000       Female</span></span></code></pre></div>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;           Mean_Cov_chrX Mean_Cov_chrY Sex_Cov_Ratio predictedSex</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; Sample_1       33.20054     0.4870999     68.159604       Female</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; Sample_2       36.31087     0.5478362     66.280514       Female</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; Sample_3       35.13846     0.4555080     77.141255       Female</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; Sample_4       32.87347     0.4562053     72.058498       Female</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; Sample_5       15.37184     5.7340866      2.680782         Male</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; Sample_6       33.47797     0.4596918     72.827006       Female</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; Sample_7       21.84405     7.9071594      2.762566         Male</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; Sample_8       36.63454     0.5295641     69.178667       Female</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; Sample_9       18.15609     6.7733631      2.680514         Male</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; Sample_10      33.88088     0.5267607     64.319301       Female</span></span></code></pre></div>
 <p>We see that the guessed sex matches up nicely with the actual sex of
-the samples. That being said, please note that in this demonstration we
-use the fastGuess option which is not as accurate as the slow method
-that normalizes methylation levels to z-scores. The fast method was
-implemented here because this toy bsseq object has mainly only sex
-chromosome CpGs, thus normalizing using autosome methylation levels is
-not really possible here. However, your bsseq object likely has all
-tested CpGs, autosomal and sex, and, thus, the fastGuess option is not
-advised for most cases.</p>
+the samples.</p>
 </div>
 <div id="predict-age" class="section level2">
 <h2>Predict age</h2>
@@ -444,39 +437,34 @@ advised for most cases.</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; [madrid]: no missing data, skipping imputation</span></span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; [madrid]: predicting age now</span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; [madrid]: gathering CpGs for array-based clocks now</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; Warning in .merge_two_Seqinfo_objects(x, y): Each of the 2 combined objects has sequence levels not in the other:</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;   - in &#39;x&#39;: chr7_KI270803v1_alt, chr15_KI270850v1_alt, chr17_KI270909v1_alt, chr4_GL000008v2_random, chr14_GL000009v2_random, chr14_KI270846v1_alt, chr19_KI270938v1_alt, chr22_KI270879v1_alt, chr1_KI270706v1_random, chrUn_KI270742v1, chr1_KI270766v1_alt, chr2_KI270776v1_alt, chr8_KI270821v1_alt, chr17_KI270857v1_alt</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;   - in &#39;y&#39;: chrM</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;   Make sure to always combine/compare objects based on the same reference</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;   genome (use suppressWarnings() to suppress this warning).</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; [madrid]: calculating Dunedin methylation pace now</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; [madrid]: imputing missing data for array-based CpGs now</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; [madrid]: calculating age from array-based clocks now</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># look at the output</span></span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>predicted_age</span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt;           MADRID_Age Horvath_Age Hannum_Age PhenoAge SkinBlood_Age  Lin_Age</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; Sample_1    34.48592    34.60565 -4.1621911   60.664      8.295322 12.21698</span></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; Sample_2    40.80927    34.60565 -3.4333561   60.664      8.665987 12.21698</span></span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; Sample_3    36.01735    34.60565 -6.1512065   60.664      8.407280 12.21698</span></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; Sample_4    54.91187    34.60565 -2.6394282   60.664      8.694256 12.21698</span></span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; Sample_5    56.54770    34.60565 -0.8991330   60.664     10.024155 12.21698</span></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; Sample_6    73.48403    34.60565 -2.3894243   60.664      9.462471 12.21698</span></span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; Sample_7    53.69849    34.60565 -1.8131179   60.664      9.663648 12.21698</span></span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; Sample_8    58.76004    34.60565  0.3265283   60.664      8.961952 12.21698</span></span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; Sample_9    57.31309    34.60565 -1.9617247   60.664      9.503491 12.21698</span></span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; Sample_10   52.35543    34.60565 -4.1841212   60.664      9.174092 12.21698</span></span>
-<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt;           DunedinPACE</span></span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; Sample_1           NA</span></span>
-<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; Sample_2           NA</span></span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; Sample_3           NA</span></span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; Sample_4           NA</span></span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; Sample_5           NA</span></span>
-<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; Sample_6           NA</span></span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt; Sample_7           NA</span></span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt; Sample_8           NA</span></span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt; Sample_9           NA</span></span>
-<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; Sample_10          NA</span></span></code></pre></div>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; [madrid]: calculating Dunedin methylation pace now</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; [madrid]: imputing missing data for array-based CpGs now</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; [madrid]: calculating age from array-based clocks now</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># look at the output</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>predicted_age</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt;           MADRID_Age Horvath_Age Hannum_Age PhenoAge SkinBlood_Age  Lin_Age</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; Sample_1    34.48592    34.60565 -4.1621911   60.664      8.295322 12.21698</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; Sample_2    40.80927    34.60565 -3.4333561   60.664      8.665987 12.21698</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; Sample_3    36.01735    34.60565 -6.1512065   60.664      8.407280 12.21698</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; Sample_4    54.91187    34.60565 -2.6394282   60.664      8.694256 12.21698</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; Sample_5    56.54770    34.60565 -0.8991330   60.664     10.024155 12.21698</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; Sample_6    73.48403    34.60565 -2.3894243   60.664      9.462471 12.21698</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; Sample_7    53.69849    34.60565 -1.8131179   60.664      9.663648 12.21698</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; Sample_8    58.76004    34.60565  0.3265283   60.664      8.961952 12.21698</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; Sample_9    57.31309    34.60565 -1.9617247   60.664      9.503491 12.21698</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; Sample_10   52.35543    34.60565 -4.1841212   60.664      9.174092 12.21698</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt;           DunedinPACE</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; Sample_1           NA</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; Sample_2           NA</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; Sample_3           NA</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; Sample_4           NA</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; Sample_5           NA</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; Sample_6           NA</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; Sample_7           NA</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; Sample_8           NA</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; Sample_9           NA</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; Sample_10          NA</span></span></code></pre></div>
 <p>This outputs the predicted ages for each sample. We can also see how
 well they correlate with the actual ages, if that information is readily
 available.</p>
@@ -539,17 +527,18 @@ demonstration a simple t-test is utilized here.</p>
 difference (accelerated or decelerated) in predicted age between groups.
 Hopefully in your data there will be, though!</p>
 </div>
-<div id="estimate-cell-counts-of-blood-samples" class="section level3">
-<h3>Estimate cell counts of blood samples</h3>
-<p>If you’re using blood samples, we can also estiamte the cell-type
-proportions from your sequenced data. The function estimateCellCounts()
-leans heavily upon the R package meffil to perform these calculations.
-In testing, I had some samples that were run on the EPIC microarray and
-were also sequenced and found that this method produced results that
-were more correlated with each other than other methods that were
-developed for sequence data (e.g., methylcc).</p>
+<div id="estimate-cell-type-proportions-of-blood-samples" class="section level3">
+<h3>Estimate cell-type proportions of blood samples</h3>
+<p>If you’re using blood or saliva samples, we can also estiamte the
+cell-type proportions from your sequenced data. The function
+estimateCellProps() leans heavily upon the R package meffil to perform
+these calculations. In testing, I had some samples that were run on the
+EPIC microarray and had the exact same DNA extracts also sequenced and
+found that this method produced results that were more correlated with
+each other than other methods that were developed for sequence data
+(e.g., methylcc).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># estimate cell-type proportions from blood samples</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># cellProps &lt;- estimateCellCounts(bs)</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># cellProps &lt;- estimateCellProps(bs)</span></span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># check the estimates</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># head(cellProps)</span></span></code></pre></div>

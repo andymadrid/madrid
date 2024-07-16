@@ -75,14 +75,14 @@ Now we can attempt to guess the sex of the samples.
 
 ```{r}
 # guess sample sex from bsseq object
-guessed_sex <- guessSex(bs, fastGuess = TRUE)
+guessed_sex <- guessSex(bs)
 
 # look at the output
 guessed_sex
 
 
 ```
-We see that the guessed sex matches up nicely with the actual sex of the samples. That being said, please note that in this demonstration we use the fastGuess option which is not as accurate as the slow method that normalizes methylation levels to z-scores. The fast method was implemented here because this toy bsseq object has mainly only sex chromosome CpGs, thus normalizing using autosome methylation levels is not really possible here. However, your bsseq object likely has all tested CpGs, autosomal and sex, and, thus, the fastGuess option is not advised for most cases.
+We see that the guessed sex matches up nicely with the actual sex of the samples. 
 
 ## Predict age
 
@@ -133,14 +133,14 @@ I'd like to note that a Kruskall-Wallis test or something like a generalized lin
 That being said, in this toy example there is no signficant difference (accelerated or decelerated) in predicted age between groups. Hopefully in your data there will be, though!
 
 
-### Estimate cell counts of blood samples
+### Estimate cell-type proportions of blood samples
 
-If you're using blood samples, we can also estiamte the cell-type proportions from your sequenced data. The function estimateCellCounts() leans heavily upon the R package meffil to perform these calculations. In testing, I had some samples that were run on the EPIC microarray and were also sequenced and found that this method produced results that were more correlated with each other than other methods that were developed for sequence data (e.g., methylcc).
+If you're using blood or saliva samples, we can also estiamte the cell-type proportions from your sequenced data. The function estimateCellProps() leans heavily upon the R package meffil to perform these calculations. In testing, I had some samples that were run on the EPIC microarray and had the exact same DNA extracts also sequenced and found that this method produced results that were more correlated with each other than other methods that were developed for sequence data (e.g., methylcc).
 
 
 ``` {r}
 # estimate cell-type proportions from blood samples
-# cellProps <- estimateCellCounts(bs)
+# cellProps <- estimateCellProps(bs)
 
 # check the estimates
 # head(cellProps)
